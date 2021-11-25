@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,7 +21,13 @@ class ExpenseMoneyViewModel @Inject constructor(
     private val _state = mutableStateOf(ExpenseMoneyState())
     val state: State<ExpenseMoneyState> = _state
 
+    private val _date = mutableStateOf(Calendar.getInstance())
+    val date: State<Calendar> = _date
+
     private var getMoneyJob: Job?= null
+
+    private val _total = mutableStateOf(0)
+    val total: State<Int> = _total
 
     init {
         getMoney()
@@ -28,14 +35,8 @@ class ExpenseMoneyViewModel @Inject constructor(
 
     fun onEvent(event: ExpenseMoneyEvent) {
         when (event) {
-            is ExpenseMoneyEvent.AddExpenseMoney -> {
-
-            }
-            is ExpenseMoneyEvent.SelectExpenseMoney -> {
-
-            }
             is ExpenseMoneyEvent.SwitchDate -> {
-
+                //TODO ChangeDate
             }
         }
     }
