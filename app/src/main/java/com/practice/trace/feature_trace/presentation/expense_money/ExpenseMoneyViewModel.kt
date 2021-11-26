@@ -43,7 +43,7 @@ class ExpenseMoneyViewModel @Inject constructor(
 
     private fun getMoney() {
         getMoneyJob?.cancel()
-        getMoneyJob = moneyUseCases.getMoney(OrderType.Expense)
+        getMoneyJob = moneyUseCases.getMoneyList(OrderType.Expense)
             .onEach { money ->
                 _state.value = state.value.copy(
                     expenseMoney = money

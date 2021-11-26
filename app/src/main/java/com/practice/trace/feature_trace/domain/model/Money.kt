@@ -9,7 +9,7 @@ data class Money(
     val amount: Int,
     val description: String,
     val category: String,
-    val accounts : String,
+    val account : String,
     val timestamp : Long,
     val type: String
 )

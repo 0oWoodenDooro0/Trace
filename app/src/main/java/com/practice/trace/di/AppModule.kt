@@ -7,7 +7,7 @@ import com.practice.trace.feature_trace.data.repository.MoneyRepositoryImpl
 import com.practice.trace.feature_trace.domain.repository.MoneyRepository
 import com.practice.trace.feature_trace.domain.use_case.AddMoney
 import com.practice.trace.feature_trace.domain.use_case.DeleteMoney
-import com.practice.trace.feature_trace.domain.use_case.GetMoney
+import com.practice.trace.feature_trace.domain.use_case.GetMoneyList
 import com.practice.trace.feature_trace.domain.use_case.MoneyUseCases
 import dagger.Module
 import dagger.Provides
@@ -39,7 +39,7 @@ object AppModule {
     @Singleton
     fun provideMoneyUseCases(repository: MoneyRepository): MoneyUseCases{
         return MoneyUseCases(
-            getMoney = GetMoney(repository),
+            getMoneyList = GetMoneyList(repository),
             deleteMoney = DeleteMoney(repository),
             addMoney = AddMoney(repository)
         )
