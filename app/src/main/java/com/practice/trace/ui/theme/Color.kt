@@ -14,5 +14,6 @@ val ExpenseBackground = Color(0xFFE6534B)
 val ExpenseMoney = Color(0xFFD7433A)
 val ExpenseText = Color(0xFFFFFFFF)
 val IncomeBackground = Color(0xFF8BC34A)
+val DatePickerBackground = Color(0xFFEDEBD2)
 
 val Secondary = Color(0xFF4DD0E1)

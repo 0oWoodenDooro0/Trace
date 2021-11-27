@@ -5,10 +5,7 @@ import androidx.room.Room
 import com.practice.trace.feature_trace.data.data_source.MoneyDatabase
 import com.practice.trace.feature_trace.data.repository.MoneyRepositoryImpl
 import com.practice.trace.feature_trace.domain.repository.MoneyRepository
-import com.practice.trace.feature_trace.domain.use_case.AddMoney
-import com.practice.trace.feature_trace.domain.use_case.DeleteMoney
-import com.practice.trace.feature_trace.domain.use_case.GetMoneyList
-import com.practice.trace.feature_trace.domain.use_case.MoneyUseCases
+import com.practice.trace.feature_trace.domain.use_case.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,7 +38,8 @@ object AppModule {
         return MoneyUseCases(
             getMoneyList = GetMoneyList(repository),
             deleteMoney = DeleteMoney(repository),
-            addMoney = AddMoney(repository)
+            addMoney = AddMoney(repository),
+            getMoney = GetMoney(repository)
         )
     }
 }

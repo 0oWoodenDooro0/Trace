@@ -17,30 +17,24 @@ class AddExpenseMoneyViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _amount = mutableStateOf(AddExpenseMoneyState().amount)
-    val amount: State<Int> = _amount
-
-    private val _category = mutableStateOf(AddExpenseMoneyState().category)
-    val category: State<String> = _category
-
-    private val _description = mutableStateOf(AddExpenseMoneyState().description)
-    val description: State<String> = _description
-
-    private val _account = mutableStateOf(AddExpenseMoneyState().account)
-    val account: State<String> = _account
+    private val _state = mutableStateOf(AddExpenseMoneyState())
+    val state: State<AddExpenseMoneyState> = _state
 
     private var currentMoneyId: Int? = null
 
-    init{
+    init {
         savedStateHandle.get<Int>("moneyId")?.let { moneyId ->
-            if (moneyId != -1){
-                viewModelScope.launch{
-                    moneyUseCases.getMoney(moneyId)?.also{ money->
+            if (moneyId != -1) {
+                viewModelScope.launch {
+                    moneyUseCases.getMoney(moneyId)?.also { money ->
                         currentMoneyId = money.id
-                        _amount.value = money.amount
-                        _category.value = money.category
-                        _description.value = money.description
-                        _account.value = money.account
+                        _state.value = state.value.copy(
+                            amount = money.amount,
+                            isSoftKeyBoardVisible = false,
+                            category = money.category,
+                            description = money.description,
+                            account = money.account
+                        )
                     }
                 }
             }
@@ -51,33 +45,47 @@ class AddExpenseMoneyViewModel @Inject constructor(
         when (event) {
             is AddExpenseMoneyEvent.SaveMoney -> {
                 viewModelScope.launch {
-                    moneyUseCases.addMoney(
-                        Money(
-                            id = currentMoneyId,
-                            amount = amount.value,
-                            description = description.value,
-                            category = category.value,
-                            account = account.value,
-                            timestamp = System.currentTimeMillis(),
-                            type = "Expense"
+                    try {
+                        moneyUseCases.addMoney(
+                            Money(
+                                id = currentMoneyId,
+                                amount = state.value.amount,
+                                description = state.value.description,
+                                category = state.value.category,
+                                account = state.value.account,
+                                timestamp = System.currentTimeMillis(),
+                                type = "Expense"
+                            )
                         )
-                    )
+                    } catch (e: Exception) {
+                        print("Failed")
+                    }
                 }
             }
             is AddExpenseMoneyEvent.Amount -> {
-                _amount.value = amount.value
+                _state.value = state.value.copy(
+                    amount = event.value
+                )
             }
             is AddExpenseMoneyEvent.AmountFocused -> {
-                _amount.value = amount.value
+                _state.value = state.value.copy(
+                    isSoftKeyBoardVisible = true
+                )
             }
             is AddExpenseMoneyEvent.Category -> {
-                _category.value = category.value
+                _state.value = state.value.copy(
+                    category = event.value
+                )
             }
             is AddExpenseMoneyEvent.Description -> {
-                _description.value = description.value
+                _state.value = state.value.copy(
+                    description = event.value
+                )
             }
             is AddExpenseMoneyEvent.Account -> {
-                _account.value = account.value
+                _state.value = state.value.copy(
+                    account = event.value
+                )
             }
         }
     }

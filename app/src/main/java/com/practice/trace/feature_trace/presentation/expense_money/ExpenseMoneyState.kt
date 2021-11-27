@@ -4,5 +4,6 @@ import com.practice.trace.feature_trace.domain.model.Money
 import com.practice.trace.feature_trace.domain.util.OrderType
 
 data class ExpenseMoneyState(
-    val expenseMoney: List<Money> = emptyList()
+    val expenseMoney: List<Money> = emptyList(),
+    val date: Boolean = false
 )

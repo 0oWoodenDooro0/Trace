@@ -36,7 +36,9 @@ class ExpenseMoneyViewModel @Inject constructor(
     fun onEvent(event: ExpenseMoneyEvent) {
         when (event) {
             is ExpenseMoneyEvent.SwitchDate -> {
-                //TODO ChangeDate
+                _state.value = state.value.copy(
+                    date = true
+                )
             }
         }
     }
