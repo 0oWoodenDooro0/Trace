@@ -16,6 +16,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TraceTheme {
+                ExpenseMoneyScreen(context = this)
             }
         }
     }
