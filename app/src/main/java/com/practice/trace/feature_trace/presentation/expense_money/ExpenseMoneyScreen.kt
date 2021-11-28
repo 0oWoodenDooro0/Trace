@@ -33,7 +33,7 @@ import java.util.*
 
 @Composable
 fun ExpenseMoneyScreen(
-    context: Context,
+    navController: NavController,
     viewModel: ExpenseMoneyViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
@@ -42,22 +42,6 @@ fun ExpenseMoneyScreen(
     val dateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.TAIWAN)
 
     val total = viewModel.total.value
-
-    val year: Int = calendar.get(Calendar.YEAR)
-    val month: Int = calendar.get(Calendar.MONTH)
-    val day: Int = calendar.get(Calendar.DAY_OF_MONTH)
-    calendar.time = Date()
-
-    val date = remember { mutableStateOf("") }
-    val datePickerDialog = DatePickerDialog(
-        context,
-        { _: DatePicker, year: Int, month: Int, day: Int ->
-            date.value = "$day/$month/$year"
-        },
-        year,
-        month,
-        day
-    )
 
     Column(
         modifier = Modifier
@@ -86,7 +70,7 @@ fun ExpenseMoneyScreen(
             contentColor = ExpenseText,
             actions = {
                 IconButton(onClick = {
-                    datePickerDialog.show()
+                    /*TODO Change Date*/
                 }) {
                     Icon(
                         imageVector = Icons.Filled.DateRange,
@@ -127,118 +111,6 @@ fun ExpenseMoneyScreen(
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             items(state.expenseMoney) { money ->
-                ExpenseMoneyItem(money = money)
-            }
-        }
-    }
-}
-
-@RequiresApi(Build.VERSION_CODES.N)
-@ExperimentalMaterialApi
-@Preview(widthDp = 360, heightDp = 640)
-@Composable
-fun Screen() {
-
-    val calendar = Calendar.getInstance()
-    val dateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.TAIWAN)
-
-    val moneyList = arrayListOf(
-        Money(
-            id = 1,
-            amount = 345,
-            description = "",
-            category = "Lunch",
-            account = "cash",
-            timestamp = 0L,
-            type = "expense"
-        ),
-        Money(
-            id = 2,
-            amount = 259,
-            description = "",
-            category = "Clothing",
-            account = "cash",
-            timestamp = 0L,
-            type = "expense"
-        ),
-        Money(
-            id = 3,
-            amount = 789,
-            description = "",
-            category = "34",
-            account = "cash",
-            timestamp = 0L,
-            type = "expense"
-        )
-    )
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(ExpenseBackground)
-    ) {
-        TopAppBar(
-            title = {
-                Text(
-                    text = dateFormat.format(calendar.time)
-                )
-            },
-            navigationIcon = {
-                IconButton(
-                    onClick = {
-                        /*TODO NavigationDrawer*/
-                    }
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Menu,
-                        contentDescription = ""
-                    )
-                }
-            },
-            backgroundColor = Primary,
-            contentColor = ExpenseText,
-            actions = {
-                IconButton(onClick = {
-                    /*TODO DatePicker*/
-                }) {
-                    Icon(
-                        imageVector = Icons.Filled.DateRange,
-                        contentDescription = ""
-                    )
-                }
-                IconButton(onClick = {
-                    /*TODO AddExpenseMoney*/
-                }) {
-                    Icon(
-                        imageVector = Icons.Filled.ControlPoint,
-                        contentDescription = ""
-                    )
-                }
-            }
-        )
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(all = 10.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = "TWD",
-                color = ExpenseText,
-                fontSize = 50.sp
-            )
-            Text(
-                text = "256",
-                color = ExpenseText,
-                fontSize = 50.sp
-            )
-        }
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth(),
-            contentPadding = PaddingValues(horizontal = 10.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
-        ) {
-            items(moneyList) { money ->
                 ExpenseMoneyItem(money = money)
             }
         }
