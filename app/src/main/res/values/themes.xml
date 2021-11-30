@@ -19,6 +19,15 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="DatePickerDialog" parent="Theme.MaterialComponents.DayNight.Dialog">
+        <item name="android:windowBackground">@color/primary_variant</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="android:textColor">@color/white </item>
+        <item name= "android:colorControlHighlight">@color/secondary_variant</item>
+        <item name="android:colorControlActivated">@color/secondary</item>
+        <item name="cornerSize">15dp</item>
+    </style>
+
     <style name="Theme.Trace.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Trace.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
